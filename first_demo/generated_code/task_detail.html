@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>タスク詳細</title>
+</head>
+<body>
+    <h1>タスク: {{ task.task_name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="task_name">タスク名</label>
+        <input type="text" id="task_name" name="TASK_NAME" value="{{ task.task_name }}" required>
+        <br>
+        <label for="task_description">内容</label>
+        <textarea id="task_description" name="TASK_DESCRIPTION">{{ task.contents }}</textarea>
+        <br>
+        <label for="assign">担当者</label>
+        <select id="assign" name="ASSIGN">
+            {% for user in users %}
+            <option value="{{ user.id }}" {% if user.id == task.assign_id %}selected{% endif %}>{{ user.user_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="status">状態</label>
+        <select id="status" name="STATUS">
+            <option value="未開始" {% if task.status == '未開始' %}selected{% endif %}>未開始</option>
+            <option value="実行中" {% if task.status == '実行中' %}selected{% endif %}>実行中</option>
+            <option value="完了済み" {% if task.status == '完了済み' %}selected{% endif %}>完了済み</option>
+            <option value="保留中" {% if task.status == '保留中' %}selected{% endif %}>保留中</option>
+        </select>
+        <br>
+        <label for="start_day">開始日</label>
+        <input type="date" id="start_day" name="START_DAY" value="{{ task.start_day }}">
+        <br>
+        <label for="end_day">終了日</label>
+        <input type="date" id="end_day" name="END_DAY" value="{{ task.end_day }}">
+        <br>
+        <button type="submit">保存</button>
+    </form>
+</body>
+</html>

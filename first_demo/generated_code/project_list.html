@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プロジェクト一覧</title>
+</head>
+<body>
+    <h1>プロジェクト一覧</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>プロジェクトID</th>
+                <th>プロジェクト名</th>
+                <th>プロジェクトメンバー</th>
+                <th>残タスク数</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.project_id }}</td>
+                <td><a href="{% url 'project_detail' project.project_id %}">{{ project.project_name }}</a></td>
+                <td>{{ project.project_members }}</td>
+                <td>{{ project.remaining_tasks }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button onclick="location.href='{% url 'add_project' %}'">プロジェクト追加</button>
+</body>
+</html>
